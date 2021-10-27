@@ -1,0 +1,21 @@
+testing blah
+
+[start] #This is extra [start]
+vector david is awesome
+v 1.2 4.3 5.3
+v 3.4 2.3 4.5
+vector 3.4 2.3 5.6
+ints 1 3 5 7 #Comment
+wine FALSE #Commenting
+doll finny #Comment stuff.....
+
+
+[final]
+vector 3.4 3.4 2.3
+f 1 3 4
+wine false
+doll 				    ninny # THis is a comment
+tested state
+
+[start2]
+test ing
