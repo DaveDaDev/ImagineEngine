@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TRUE 1
+#define FALSE 0
+
 void _iec_array_dynamic_grow(iec_array_dynamic* array)
 {
     array->element_amount_capacity *= array->growth_factor;
@@ -11,14 +14,26 @@ void _iec_array_dynamic_grow(iec_array_dynamic* array)
 }
 
 
-iec_array_dynamic* iec_array_dynamic_create(size_t element_size, unsigned int capacity, float growth_factor)
+void _iec_array_dynamic_shrink(iec_array_dynamic* array)
+{
+    array->element_amount_capacity /= array->growth_factor;
+
+    if ( array->element_amount_capacity < IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_CAPACITY )
+        array->element_amount_capacity = IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_CAPACITY;
+
+    array->pdata = realloc(array->pdata, array->element_amount_capacity * array->element_size);
+}
+
+
+iec_array_dynamic* iec_array_dynamic_create(size_t element_size)
 {
     iec_array_dynamic* new_array = malloc(sizeof(iec_array_dynamic));
 
     new_array->element_size = element_size;
     new_array->element_amount_used = 0;
-    new_array->element_amount_capacity = capacity;
-    new_array->growth_factor = growth_factor;
+    new_array->element_amount_capacity = IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_CAPACITY;
+    new_array->dynamic_shrink = FALSE;
+    new_array->growth_factor = IEC_ARRAY_DYNAMIC_DEFAULT_GROWTH_RATIO;
 
     new_array->pdata = malloc(new_array->element_amount_capacity * element_size);
 
@@ -57,6 +72,12 @@ void iec_array_dynamic_pop_back(iec_array_dynamic* array, void* data)
 
     if ( data != NULL ) 
         memcpy(data, array->pdata + (array->element_size * array->element_amount_used), array->element_size);
+
+    if ( array->dynamic_shrink ) {
+        if ( array->element_amount_used < (array->element_amount_capacity / array->growth_factor) && 
+            array->element_amount_capacity > IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_CAPACITY)
+            _iec_array_dynamic_shrink(array);
+    }
 }
 
 
@@ -131,6 +152,12 @@ void iec_array_dynamic_erase(iec_array_dynamic* array, unsigned int index)
    size_t nbytes = p_end - p_source;
 
    memcpy(p_destination, p_source, nbytes);
+    
+    if ( array->dynamic_shrink ) {
+        if ( array->element_amount_used < (array->element_amount_capacity / array->growth_factor) &&
+            array->element_amount_capacity > IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_CAPACITY)
+            _iec_array_dynamic_shrink(array);
+    }
 }
 
 
@@ -162,6 +189,18 @@ void iec_array_dynamic_resize(iec_array_dynamic* array, unsigned int new_capacit
 }
 
 
+void iec_array_dynamic_growth_set(iec_array_dynamic* array, float new_rate)
+{
+    array->growth_factor = new_rate;
+}
+
+
+void iec_array_dynamic_shrink_toggle(iec_array_dynamic* array, unsigned int toggle)
+{
+    array->dynamic_shrink = toggle;
+}
+
+
 unsigned int iec_array_dynamic_is_empty(iec_array_dynamic* array)
 {
     return array->element_amount_used;
@@ -180,3 +219,14 @@ unsigned int iec_array_dynamic_capacity(iec_array_dynamic* array)
 }
 
 
+unsigned int iec_array_dynamic_has(iec_array_dynamic* array, void* p1, unsigned int (*is_equal)(void*, void*))
+{
+    int i;
+    void* p2 = NULL;
+    for(i = 0; i < iec_array_dynamic_size(array); ++i) {
+        p2 = iec_array_dynamic_value_pointer(array, i);
+        if ( is_equal(p1, p2) ) 
+            return 1;
+    }
+    return 0;
+}

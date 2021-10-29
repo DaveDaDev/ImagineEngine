@@ -3,9 +3,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+unsigned int is_equal_int(void* p1, void* p2)
+{
+    int* i1 = (int*) p1;
+    int* i2 = (int*) p2;
+
+    if ( (*i1) == (*i2) )
+        return 1;
+
+    return 0;
+}
+
 int main()
 {
-    iec_array_dynamic* my_new_array = iec_array_dynamic_create(sizeof(int), IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_AMOUNT, IEC_ARRAY_DYNAMIC_DEFAULT_GROWTH_RATIO);
+    iec_array_dynamic* my_new_array = iec_array_dynamic_create(sizeof(int));
     
     int i;
     for (i = 1; i < 21; ++i) { 
@@ -43,7 +54,23 @@ int main()
             printf("%i\n", *pdata);
     }
 
-    iec_array_dynamic_destroy(my_new_array);
+    int j = 10;
+    unsigned int result = iec_array_dynamic_has(my_new_array, &j, is_equal_int);
+    printf("Has 10? (%u)\n", result);
 
+    for (i = 0; i < 15; ++i) {
+        iec_array_dynamic_pop_back(my_new_array, NULL);
+    }
+
+    printf("Size: %u\n", iec_array_dynamic_size(my_new_array));
+    printf("Capacity: %u\n", iec_array_dynamic_capacity(my_new_array));
+
+    iec_array_dynamic_shrink_toggle(my_new_array, 1);
+    printf("Dynamic Shrink On\n");
+    iec_array_dynamic_pop_back(my_new_array, NULL);
+
+    printf("Capacity: %u\n", iec_array_dynamic_capacity(my_new_array));
+
+    iec_array_dynamic_destroy(my_new_array);
     printf("Completed\n");
 }

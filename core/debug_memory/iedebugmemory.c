@@ -17,9 +17,7 @@ iec_array_dynamic* _ie_core_debug_memory_dynamicarray = NULL;
 
 void iec_debug_memory_startup()
 {
-   _ie_core_debug_memory_dynamicarray = iec_array_dynamic_create(sizeof(ie_debug_memory_allocation_record),
-                                        IEC_ARRAY_DYNAMIC_DEFAULT_ELEMENT_AMOUNT,
-                                        IEC_ARRAY_DYNAMIC_DEFAULT_GROWTH_RATIO);
+   _ie_core_debug_memory_dynamicarray = iec_array_dynamic_create(sizeof(ie_debug_memory_allocation_record));
 }
 
 
