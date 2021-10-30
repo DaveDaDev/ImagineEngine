@@ -1,7 +1,7 @@
 #include "iewindow.h"
 
-#include "../log/ielog.h"
-#include "../loop/ieloop.h"
+#include "core/log/ielog.h"
+#include "core/loop/ieloop.h"
 
 #include <inttypes.h>
 #include <stdio.h>

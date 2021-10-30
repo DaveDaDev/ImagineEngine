@@ -1,4 +1,4 @@
-#include "../array_dynamic/iearraydynamic.h"
+#include "core/array_dynamic/iearraydynamic.h"
 
 #include <stdio.h>
 
@@ -46,7 +46,6 @@ void* iec_debug_memory_malloc(size_t size, char* file, unsigned int line)
     for (i = 0; i < 255 && file[i] != 0; ++i)
         new_record.file[i] = file[i];
     
-    printf(">>Malloc (%p) - File: (%s) Line: (%u) Size (%u)\n", new_pointer, file, line, size); 
     iec_array_dynamic_push_back(_ie_core_debug_memory_dynamicarray, (void*)&new_record);
 
     return new_pointer; 

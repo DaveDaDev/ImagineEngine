@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../core/iecore.h"
+#include "core/iecore.h"
 
 IELoop game = {};
 ie_window* window;

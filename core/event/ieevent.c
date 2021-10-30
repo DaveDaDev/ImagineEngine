@@ -1,14 +1,14 @@
 #include "ieevent.h"
 
-#include "../iecoredefinitions.h"
-#include "../window/iewindow.h"
-#include "../log/ielog.h"
+#include "core/iecoredefinitions.h"
+#include "core/window/iewindow.h"
+#include "core/log/ielog.h"
 
 #include <stdlib.h>
 #include <string.h>
 #include <xcb/xcb.h>
 
-#include "../debug_memory/iedebugmemory.h"
+#include "core/debug_memory/iedebugmemory.h"
 
 
 extern xcb_connection_t* xcb_connection;

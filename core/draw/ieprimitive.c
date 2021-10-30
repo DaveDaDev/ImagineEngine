@@ -1,6 +1,6 @@
 #include "ieprimitive.h"
 
-#include "../window/iewindow.h"
+#include "core/window/iewindow.h"
 
 #include <xcb/xcb.h>
 

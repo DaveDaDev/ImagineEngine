@@ -1,7 +1,7 @@
 #ifndef IE_CORE_EVENT
 #define IE_CORE_EVENT
 
-#include "../iecoredefinitions.h"
+#include "core/iecoredefinitions.h"
 
 #include <inttypes.h>
 

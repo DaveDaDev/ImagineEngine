@@ -1,7 +1,7 @@
 #ifndef IE_CORE_DRAW_PRIMITIVE
 #define IE_CORE_DRAW_PRIMITIVE
 
-#include "../window/iewindow.h"
+#include "core/window/iewindow.h"
 
 #include <inttypes.h>
 
