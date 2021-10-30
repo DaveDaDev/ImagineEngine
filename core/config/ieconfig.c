@@ -1,6 +1,6 @@
 #include "ieconfig.h"
 
-#include "../iecoredefinitions.h"
+#include "core/iecoredefinitions.h"
 
 #include <ctype.h>
 #include <inttypes.h>

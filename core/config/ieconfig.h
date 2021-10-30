@@ -1,7 +1,7 @@
 #ifndef IE_CORE_CONFIG
 #define IE_CORE_CONFIG
 
-#include "../iecoredefinitions.h"
+#include "core/iecoredefinitions.h"
 
 #include <stdio.h>
 
